@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 import { Heading1 } from "lucide-react";
 import AddItem from "./pages/AddItem";
+import ItemList from "./pages/ItemList";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             } />
             <Route path="/item-list" element={
               <h1 className="text-2xl font-bold text-center mt-10">
-                Item List Page (MongoDB)
+               <ItemList />
               </h1>
             } />
             <Route path="/add-sql-user" element={

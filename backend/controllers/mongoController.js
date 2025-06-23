@@ -37,9 +37,10 @@ const createItem = async (req, res) => {
   await body('price').isNumeric().withMessage('Price must be a number').run(req);
   
   const errors = validationResult(req);
-  if (errors.length > 0) {
-    return res.status(400).json({ errors });
-  }
+if (!errors.isEmpty()) {
+  return res.status(400).json({ errors: errors.array() });
+}
+
 
   try {
     const newItem = new Item(req.body);

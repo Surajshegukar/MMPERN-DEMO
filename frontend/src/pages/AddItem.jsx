@@ -6,9 +6,9 @@ import "jquery-validation";
 function AddItem() {
   useEffect(() => {
     // Initialize jQuery validation when component mounts
-    $("#addForm").validate({
+    $("#add_form").validate({
       rules: {
-        item_name: {
+        name: {
           required: true,
           minlength: 2,
         },
@@ -23,7 +23,7 @@ function AddItem() {
         },
       },
       messages: {
-        item_name: {
+        name: {
           required: "Item Name is required",
           minlength: "Item Name must be at least 2 characters",
         },
@@ -48,9 +48,9 @@ function AddItem() {
       },
       submitHandler: function (form) {
         const formData = {
-          item_name: $("#item_name").val(),
+          name: $("#name").val(),
           description: $("#description").val(),
-          price: $("#price").val(),
+          price: parseFloat($("#price").val()),
         };
 
         fetch("http://localhost:3000/api/mongo/items", {
@@ -80,154 +80,157 @@ function AddItem() {
   }, []);
 
   const [formData, setFormData] = React.useState({
-    item_name: "",
+    name: "",
     description: "",
     price: 0,
   });
 
   const handleChange = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    
   };
 
   return (
     <>
-      <div class="main_page">
-        <div class="page_title">
+      <div className="main_page">
+        <div className="page_title">
           <h3>Form Template 2</h3>
         </div>
-        <div class="page_body">
-          <div class="page_sec">
+        <div className="page_body">
+          <div className="page_sec">
             <form
               method="post"
               name="add_form"
               id="add_form"
-              enctype="multipart/form-data"
-              novalidate="novalidate"
+              encType="multipart/form-data"
+              noValidate="novalidate"
             >
-              <div class="row flex_wrap">
+              <div className="row flex_wrap">
                 {/* name , description and price */}
 
-                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                   <label>
-                    Item Name <b class="require">*</b>
+                    Item Name <b className="require">*</b>
                   </label>
                   <input
                     autocomplete="off"
                     type="text"
-                    class="form-control"
-                    name="item_name"
-                    id="item_name"
-                    value=""
+                    className="form-control"
+                    name="name"
+                    id="name"
+                    value={formData.name}
                     placeholder="Enter Item Name"
                     onChange={handleChange}
                     required=""
                   />
                 </div>
-                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                   <label>
-                    Description <b class="require">*</b>
+                    Description <b className="require">*</b>
                   </label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     name="description"
                     id="description"
+                    value={formData.description}
                     placeholder="Enter Description"
                     required=""
                     onChange={handleChange}
                   ></textarea>
                 </div>
-                <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                   <label>
-                    Price <b class="require">*</b>
+                    Price <b className="require">*</b>
                   </label>
                   <input
                     autocomplete="off"
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     name="price"
                     id="price"
-                    value=""
+                    value={formData.price}
+                    min="0"
                     placeholder="Enter Price"
                     onChange={handleChange}
                     required=""
                   />
                 </div>
 
-                {/* <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Customer Name <b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="customer_name" id="customer_name" value="" placeholder="Enter Customer Name" onChange={handleChange} required="" />
+                {/* <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Customer Name <b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="customer_name" id="customer_name" value="" placeholder="Enter Customer Name" onChange={handleChange} required="" />
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Category<b class="require">*</b></label>
-                            <select class="form-control" name="category" id="category" value="" placeholder="Select Category">
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Category<b className="require">*</b></label>
+                            <select className="form-control" name="category" id="category" value="" placeholder="Select Category">
                                 <option value="">select category</option>
                                 <option value="0">category1</option>
                                 <option value="1">category2</option>
                             </select>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Region <b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="region" id="region" value="" placeholder="Enter Region"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Region <b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="region" id="region" value="" placeholder="Enter Region"/>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Contact Person <b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="contact_person" id="contact_person" value="" placeholder="Enter Contact Person Name"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Contact Person <b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="contact_person" id="contact_person" value="" placeholder="Enter Contact Person Name"/>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Contact Person Designation<b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="contact_person_designation" id="contact_person_designation" value="" placeholder="Enter Contact Person Designation"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Contact Person Designation<b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="contact_person_designation" id="contact_person_designation" value="" placeholder="Enter Contact Person Designation"/>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Inquiry Level<b class="require">*</b></label>
-                            <select class="form-control" name="inquiry_level" id="inquiry_level" value="" placeholder="Select Inquiry Level">
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Inquiry Level<b className="require">*</b></label>
+                            <select className="form-control" name="inquiry_level" id="inquiry_level" value="" placeholder="Select Inquiry Level">
                                 <option value="">select inquiry level</option>
                                 <option value="0">level1</option>
                                 <option value="1">level2</option>
                             </select>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Project Proposal Schedule<b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="project_proposal_schedule" id="project_proposal_schedule" value="" placeholder="Enter Project Proposal Schedule"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Project Proposal Schedule<b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="project_proposal_schedule" id="project_proposal_schedule" value="" placeholder="Enter Project Proposal Schedule"/>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Status<b class="require">*</b></label>
-                            <select class="form-control" name="status" id="status" value="" placeholder="Select status">
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Status<b className="require">*</b></label>
+                            <select className="form-control" name="status" id="status" value="" placeholder="Select status">
                                 <option value="">select status</option>
                                 <option value="0">status1</option>
                                 <option value="1">status2</option>
                             </select>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Qnt<b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="qnt" id="qnt" value="" placeholder="Enter Qnt"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Qnt<b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="qnt" id="qnt" value="" placeholder="Enter Qnt"/>
                         </div>
 
-                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <label>Source<b class="require">*</b></label>
-                            <input autocomplete="off" type="text" class="form-control" name="source" id="source" value="" placeholder="Enter Source"/>
+                        <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label>Source<b className="require">*</b></label>
+                            <input autocomplete="off" type="text" className="form-control" name="source" id="source" value="" placeholder="Enter Source"/>
                         </div>
 
-                        <div class="form-group  col-xl-12 col-md-12 col-sm-12 col-xs-12">
-                            <label>Description<b class="require">*</b></label>
-                            <textarea class="form-control" name="description" id="description" placeholder="Enter Description" required=""></textarea>
+                        <div className="form-group  col-xl-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Description<b className="require">*</b></label>
+                            <textarea className="form-control" name="description" id="description" placeholder="Enter Description" required=""></textarea>
                         </div> */}
               </div>
               <div className="form-footer">
-                <div class="form-group col-md-4 col-sm-6 col-xs-12">
-                  <button id="submit" type="submit" class="btn btn-primary">
+                <div className="form-group col-md-4 col-sm-6 col-xs-12">
+                  <button id="submit" type="submit" className="btn btn-primary">
                     Submit
                   </button>
                 </div>
