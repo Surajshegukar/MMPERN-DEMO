@@ -16,11 +16,11 @@ connectMySQL();
 
 
 
-// app.use(express.json());
+app.use(express.json());
 app.use(cors());
 
-app.use('/api', mongoRoutes);
-app.use('/api', mySqlRoutes);
+app.use('/mongo', mongoRoutes);
+app.use('/sql', mySqlRoutes);
 // app.use('/api', postgresRoutes);
 
 
