@@ -5,6 +5,10 @@ import Header from "./components/Header";
 import { Heading1 } from "lucide-react";
 import AddItem from "./pages/AddItem";
 import ItemList from "./pages/ItemList";
+import AddSqlUser from "./pages/AddSqlUser";
+import SqlUserList from "./pages/SqlUserList";
+import AddMongoUser from "./pages/AddMongoUser";
+import MongoUserList from "./pages/MongoUserList";
 
 function App() {
   return (
@@ -17,22 +21,18 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
          
             <Route path="/add-item" element={ 
-             <AddItem />
+             <AddMongoUser />
             } />
             <Route path="/item-list" element={
               <h1 className="text-2xl font-bold text-center mt-10">
-               <ItemList />
+               <MongoUserList />
               </h1>
             } />
             <Route path="/add-sql-user" element={
-              <h1 className="text-2xl font-bold text-center mt-10">
-                Add User Page (MySQL)
-              </h1>
+             <AddSqlUser />
             } />
             <Route path="/sql-user-list" element={
-              <h1 className="text-2xl font-bold text-center mt-10">
-                User List Page (MySQL)
-              </h1>
+              <SqlUserList />
             } />
             <Route path="/add-pg-user" element={
               <h1 className="text-2xl font-bold text-center mt-10">

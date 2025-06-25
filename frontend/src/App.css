@@ -485,3 +485,7 @@ button[type="submit"] {
     border-color: darkgreen; /* Darker green on focus for success state */
     box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Green shadow on focus for success state */
 } 
+.error{
+  color: red;
+  font-size: 12px;
+}

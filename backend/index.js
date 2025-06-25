@@ -7,6 +7,7 @@ const {connectPostgres} = require('./db/postgresDB');
 
 const mongoRoutes = require('./routes/mongoRoutes');
 const mySqlRoutes = require('./routes/mySqlRoutes');
+const mongodbRoutes = require('./routes/mongodbRoutes');
 // const postgresRoutes = require('./routes/postgresRoutes');
 
 // Connect to MongoDB
@@ -20,7 +21,9 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/mongo', mongoRoutes);
-app.use('/sql', mySqlRoutes);
+app.use('/mongodb', mongodbRoutes);
+
+app.use('/mysql', mySqlRoutes);
 // app.use('/api', postgresRoutes);
 
 

@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 
 
-export default function ItemForm() {
+export default function AddSqlUser() {
   
 
 
@@ -16,13 +16,23 @@ export default function ItemForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const schema = Yup.object({
-  name: Yup.string().required('Item Name is required'),
-  description: Yup.string().required('Description is required'),
-  price: Yup.number()
-    .typeError('Price must be a number')
-    .positive('Price must be positive')
-    .required('Price is required'),
+const schema = Yup.object({
+  name: Yup.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name cannot exceed 50 characters')
+    .required('Name is required'),
+
+  email: Yup.string()
+    .email('Enter a valid email address')
+    .required('Email is required'),
+
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters')
+    .matches(/[a-z]/, 'Must include at least one lowercase letter')
+    .matches(/[A-Z]/, 'Must include at least one uppercase letter')
+    .matches(/\d/, 'Must include at least one number')
+    .matches(/[@$!%*?&]/, 'Must include at least one special character')
+    .required('Password is required'),
 });
 const {
   register,
@@ -40,15 +50,15 @@ const onSubmit = async(data) => {
     setMessage("");
 
     try {
-      const response = await fetch("http://localhost:3000/mongo/items", {
+      const response = await fetch("http://localhost:3000/mysql/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: data.name,
-          description: data.description,
-          price: parseFloat(data.price),
+          email: data.email,
+          password: data.password,
         }),
       });
 
@@ -86,7 +96,7 @@ const onSubmit = async(data) => {
             <div className="row flex_wrap">
               <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <label>
-                  Item Name <b className="require">*</b>
+                   Name <b className="require">*</b>
                 </label>
                 <input
                   autoComplete="off"
@@ -97,7 +107,7 @@ const onSubmit = async(data) => {
                  
                    {...register("name")}
 
-                  placeholder="Enter Item Name"
+                  placeholder="Enter Name"
 
                  
                 />
@@ -106,41 +116,39 @@ const onSubmit = async(data) => {
               </div>
               <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <label>
-                  Description <b className="require">*</b>
+                  Email <b className="require">*</b>
                 </label>
-                <textarea
+                <input
+                type="text"
                   className="form-control"
-                  name="description"
-                  id="description"
+                  name="email"
+                  id="email"
                 
-                  placeholder="Enter Description"
+                  placeholder="Enter email"
                  
-                   {...register("description")}
+                   {...register("email")}
 
                   
-                ></textarea>
-                {errors.description && <p className="error">{errors.description.message}</p>}
+                />
+                {errors.email && <p className="error">{errors.email.message}</p>}
 
               </div>
               <div className="form-group col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <label>
-                  Price <b className="require">*</b>
+                  Password <b className="require">*</b>
                 </label>
                 <input
                   autoComplete="off"
-                  type="number"
+                  type="text"
                   className="form-control"
-                  name="price"
-                  id="price"
-                   {...register("price")}
-
-                  min="0"
-                  step="0.01"
-                  placeholder="Enter Price"
+                  name="password"
+                  id="password"
+                   {...register("password")}
+                  placeholder="Enter password"
        
                  
                 />
-                {errors.price && <p className="error">{errors.price.message}</p>}
+                {errors.password && <p className="error">{errors.password.message}</p>}
 
               </div>
             </div>
